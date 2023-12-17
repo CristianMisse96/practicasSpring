@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/layout :: head}"></head>
+<body>
+
+	<header th:replace="~{layout/layout :: header}"></header>
+
+	<div class="container py-4">
+		<div class="card bg-dark text-white">
+			<div class="card-header" th:text="${titulo}"></div>
+			<div class="card-body">
+
+				<form th:action="@{/form}" th:object="${clienteDTO}" method="post" enctype="multipart/form-data">	
+					<div class="mb-3 row">
+						<label class="col-sm-2 form-label">Nombre</label>
+						<div class="col-sm-6">
+							<input type="text" th:field="*{nombre}" class="form-control" th:errorclass="'form-control alert alert-danger'" />
+							<small class="form-text text-danger" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></small>
+						</div>
+					</div>
+		
+					<div class="mb-3 row">
+						<label class="col-sm-2 form-label">Apellido</label>
+						<div class="col-sm-6">
+							<input type="text" th:field="*{apellido}" class="form-control" th:errorclass="'form-control alert alert-danger'" />
+							<small class="form-text text-danger" th:if="${#fields.hasErrors('apellido')}" th:errors="*{apellido}"></small>
+						</div>
+					</div>
+		
+					<div class="mb-3 row">
+						<label class="col-sm-2 form-label">Email</label>
+						<div class="col-sm-6">
+							<input type="text" th:field="*{email}" class="form-control" th:errorclass="'form-control alert alert-danger'" />
+							<small class="form-text text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small>
+						</div>
+					</div>
+					
+					<div class="mb-3 row">
+						<label class="col-sm-2 form-label">Fecha</label>
+						<div class="col-sm-6">
+							<input type="text" th:field="*{createAt}" class="form-control" th:errorclass="'form-control alert alert-danger'" />
+							<small class="form-text text-danger" th:if="${#fields.hasErrors('createAt')}" th:errors="*{createAt}"></small>
+						</div>
+					</div>
+					
+					<div class="mb-3 row">
+						<label for="file" class="col-sm-2 form-label">Foto</label>
+						<div class="col-sm-6">
+							<input type="file" name="file" class="form-control" />
+						</div>
+					</div>
+		
+					<div class="mb-3 ">
+						<div class="col-sm-6">
+							<input type="submit" value="Crear cliente" class="btn btn-secondary" />
+						</div>
+					</div>
+		
+				</form>
+			</div>
+		</div>
+	</div>
+	
+	<footer th:replace="~{layout/layout :: footer}"></footer>
+
+	<script th:href="@{/js/bootstrap.min}"></script>
+	<script th:href="@{/js/popper.min}"></script>
+	<script th:href="@{/js/bootstrap.bundle.min}"></script>
+
+</body>
+
+</html>

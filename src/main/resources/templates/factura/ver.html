@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="~{layout/layout :: head}"></head>
+<body>
+	<header th:replace="~{layout/layout :: header}"></header>
+		
+		<div class="container py-4">
+			<div class="card bg-light">
+				<div class="card-header" th:text="${titulo}"></div>
+				<div class="card-body">
+					
+					<h4 class="card-title">
+						<a th:href="@{/ver/} + ${facturaDTO.clienteDTO.id}" class="btn btn-light btn-xs">&laquo;Volver</a>
+					</h4>
+					
+					<ul class="list-group my-2">
+						<li class="list-group-item list-group-item-primary" th:text="'Datos del cliente:'"></li>
+						<li  class="list-group-item" th:text="${facturaDTO.clienteDTO}"></li>
+						<li  class="list-group-item" th:text="${facturaDTO.clienteDTO.email}"></li>
+					</ul>
+					
+					<ul class="list-group">
+						<li class="list-group-item list-group-item-success" th:text="'Datos de la factura:'"></li>
+						<li  class="list-group-item" th:text="'Folio: ' + ${facturaDTO.id}"></li>
+						<li  class="list-group-item" th:text="'Descripción: ' + ${facturaDTO.descripcion}"></li>
+						<li  class="list-group-item" th:text="'Fecha: ' + ${facturaDTO.createAt}"></li>
+					</ul>
+					
+					<div class="alert alert-info my4" th:if="${facturaDTO.items.isEmpty}" th:text="'no hay lineas para la factura ' + ${facturaDTO.descripcion}"></div>
+					
+					<table class="table table-striped table-hover table-bordered my-3" th:if="${!facturaDTO.items.isEmpty}">
+						<thead>
+							<tr>
+								<th>Producto</th>
+								<th>Precio</th>
+								<th>Cantidad</th>
+								<th>Total</th>
+							</tr>
+						</thead>
+						
+						<tbody>
+							<tr th:each="linea : ${facturaDTO.items}">
+								<td th:text="${linea.producto.nombre}"></td>
+								<td th:text="${linea.producto.precio}"></td>
+								<td th:text="${linea.cantidad}"></td>
+								<td th:text="${linea.calcularImporte()}"></td>
+							</tr>
+						</tbody>
+					</table>
+					
+					<h5 class="float-end">Gran total: <span th:text="${facturaDTO.total}" class="badge bg-secondary"></span></h5>
+					
+					<div class="card border-info mb-4" style="max-width: 20rem;">
+						<div class="card-header">Observaciones:</div>
+						<div class="card-body">
+							<p th:text="${facturaDTO.observacion}" class="card-text" th:if="${!#strings.isEmpty(facturaDTO.observacion)}"></p>
+							<h4 th:text="'No tiene observaciones'" class="card-title" th:if="${#strings.isEmpty(facturaDTO.observacion)}"></h4>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<footer th:replace="~{layout/layout :: footer}"></footer>
+
+</body>
+</html>
